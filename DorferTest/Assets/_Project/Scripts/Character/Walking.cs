@@ -27,7 +27,6 @@ public class Walking : MonoBehaviour
     internal void Stop()
     {
         animator.SetInteger("Status", 0);
-        animator.SetTrigger("StartCut");
         _movement = Vector3.zero;
     }
 }
