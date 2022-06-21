@@ -43,7 +43,6 @@ public class JoystickController : MonoBehaviour, IPointerDownHandler, IPointerUp
     }
     public void OnDrag(PointerEventData data)
     {
-        Debug.Log("DragCheck");
         if (_singleTouchCheck != data.pointerId) return;
         _positionDelta = Input.mousePosition - _zeroInGlobalCoords;
         if (_positionDelta.sqrMagnitude > Mathf.Pow(_radius * _radiusScale, 2)) _positionDelta = _positionDelta.normalized * _radius * _radiusScale;

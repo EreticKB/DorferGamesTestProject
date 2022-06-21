@@ -20,8 +20,6 @@ public class Walking : MonoBehaviour
         direction.Normalize();
         _movement = new Vector3(direction.x, 0, direction.y);
         animator.SetInteger("Status", 1);
-
-        Debug.Log(_movement);
     }
 
     internal void Stop()
