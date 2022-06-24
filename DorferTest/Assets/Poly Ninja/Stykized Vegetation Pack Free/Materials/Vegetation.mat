@@ -132,7 +132,7 @@ Material:
     - Vector2_571f4e42b09646558fc30b8d0f53ffee: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_46ff5b83f5de4d4d88b200d8f7b68a16: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 0, b: 0, a: 0.448}
-    - _Color: {r: 0.735849, g: 0.41904372, b: 0, a: 1}
+    - _Color: {r: 0.7372549, g: 0.41960785, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OffSet: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}

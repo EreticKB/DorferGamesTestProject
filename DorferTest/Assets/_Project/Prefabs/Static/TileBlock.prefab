@@ -125,6 +125,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3146034487634257953, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146034487634257953, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: ba92fb44336020f40bdf294bb66bc9da, type: 2}
+    - target: {fileID: 3272317410153600599, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4021638381785110424, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -136,6 +148,10 @@ PrefabInstance:
     - target: {fileID: 7845789735799312478, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
       propertyPath: m_Name
       value: WheatTile (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7845789735799312478, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7845789735799312479, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
       propertyPath: m_RootOrder
@@ -181,13 +197,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8245321502962326544, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3146034487634257953, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
 --- !u!4 &5414698066827314594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7845789735799312479, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
   m_PrefabInstance: {fileID: 2865704461308122621}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &29820943476046575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2858931422599868178, guid: 604208b0fc6a5714abdb5a5ff7e5124b, type: 3}
+  m_PrefabInstance: {fileID: 2865704461308122621}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2571907266386936898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29820943476046575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384e00e8a4d23714c92dbf50f624cb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4310219553309550936
 PrefabInstance:
   m_ObjectHideFlags: 0

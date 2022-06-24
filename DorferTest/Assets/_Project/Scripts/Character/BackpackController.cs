@@ -6,18 +6,17 @@ public class BackpackController : MonoBehaviour
 {
     [SerializeField] BackpackVisualController _backpack;
     [SerializeField] Collector _collector;
-    public void HayHitHome(GameObject hayBlock)
+    private int _backpackAmount;
+    public void PlaceHayIntoBackpack()
     {
-        Destroy(hayBlock);
-        _collector.HayHitHome(this);
-    }
-
-    public void LoadHay()
-    {
+        _backpackAmount++;
+        if (_backpackAmount % 2 == 0) return;
         _backpack.Increase();
     }
-    public void UnloadHay()
+    public void RemoveHayFromBackpack()
     {
+        _backpackAmount--;
+        if (_backpackAmount % 2 != 0) return;
         _backpack.Decrease();
     }
 }

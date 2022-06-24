@@ -1,30 +1,30 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Walking : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] Animator _animator;
     [SerializeField] private float _speed;
-    [SerializeField] CharacterController character;
+    [SerializeField] CharacterController _character;
     Vector3 _movement;
 
     private void Update()
     {
-        character.Move(_movement*_speed);
+        _character.Move(_movement*Time.deltaTime*_speed);
         if (_movement != Vector3.zero)transform.LookAt(transform.position + _movement);
     }
     public void WalkIntoDirection(Vector2 direction)
     {
         direction.Normalize();
         _movement = new Vector3(direction.x, 0, direction.y);
-        animator.SetInteger("Status", 1);
+        _animator.SetInteger("Status", 1);
+        gameObject.GetComponent<CutController>().HideScythe();
     }
 
     internal void Stop()
     {
-        animator.SetInteger("Status", 0);
+        _animator.SetInteger("Status", 0);
+        Debug.Log("Stop");
         _movement = Vector3.zero;
+        gameObject.GetComponent<CutController>().SearchMode();
     }
 }
