@@ -1,19 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 
 public class CutController : MonoBehaviour
 {
+    [SerializeField] CharacterRoot root;
     [SerializeField] Animator _animator;
     [SerializeField] GameObject _scythe;
-    List<GameObject> _ripeWheat = new List<GameObject>();
-    [SerializeField]bool _isSearch;
+    [SerializeField] List<GameObject> _ripeWheat = new List<GameObject>();
     Vector3 _nearest;
+    [Header("Times for scythe enabling")]
+    [SerializeField] float _enableTime = 0.35f;
+    [SerializeField] float _disableTime = 0.5f;
     private void Update()
     {
-        if (!_isSearch) return;
+        if (root.CharacterState == CharacterRoot.State.Walking)
+        {
+            _scythe.SetActive(false);
+            StopAllCoroutines();
+        }
+        if (root.CharacterState != CharacterRoot.State.Idling) return;
         _nearest = Vector3.zero;
-        _isSearch = false;
         if (_ripeWheat.Count != 0) SearchNearest();
         if (_nearest != Vector3.zero) CutTheWheat();
     }
@@ -33,47 +42,34 @@ public class CutController : MonoBehaviour
 
     private void CutTheWheat()
     {
-        transform.LookAt(new Vector3(_nearest.x, 0, _nearest.z));
+        root.CharacterState = CharacterRoot.State.Cutting;
+        transform.DOLookAt(_nearest, 0.1f, AxisConstraint.Y);
         _animator.SetInteger("Status", 2);
         StartCoroutine(ControlScythe());
-        Debug.Log("StarCut");
     }
-
-    public void HideScythe()
+    internal void AddIntoList(GameObject ripeWheat)
     {
-        _scythe.SetActive(false);
+        _ripeWheat.Add(ripeWheat);
     }
 
-    private void OnTriggerEnter(Collider ripeWheat)
+    internal void RemoveFromList(GameObject ripeWheat)
     {
-        if (ripeWheat.gameObject.tag != "Wheat") return;
-        _ripeWheat.Add(ripeWheat.gameObject);
+        _ripeWheat.Remove(ripeWheat);
     }
 
-    private void OnTriggerExit(Collider ripeWheat)
-    {
-        if (ripeWheat.gameObject.tag != "Wheat") return;
-        RemoveWheatFromList(ripeWheat.gameObject);
-    }
-
-    public void RemoveWheatFromList(GameObject wheat)
+    internal void RemoveWheatFromList(GameObject wheat)
     {
         _ripeWheat.Remove(wheat);
     }
 
-    public void SearchMode()
-    {
-        _isSearch = true;
-    }
-
     IEnumerator ControlScythe()
     {
-        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.25f);
+        yield return new WaitForSeconds(_enableTime);
         _scythe.SetActive(true);
         _animator.SetInteger("Status", 0);
-        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f);
-        HideScythe();
-        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= .99f);
-        SearchMode();
+        yield return new WaitForSeconds(_disableTime);
+        _scythe.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        root.CharacterState = CharacterRoot.State.Idling;
     }
 }

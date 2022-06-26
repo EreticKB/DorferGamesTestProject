@@ -1,13 +1,15 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using System;
 
 public class MoveHay : MonoBehaviour
 {
+    bool isAnimationFree = false;
     internal void collect(GameObject parent)
     {
         disablePhysicsAndSetNewParent(parent.transform);
-        transform.DOLocalJump(new Vector3(0, 0, -0.4f), 0.5f, 1, .5f).OnComplete(() => InBackpack(parent));
+        StartCoroutine(collectAnimation(parent));
     }
 
     internal void Unload(Transform parent)
@@ -23,6 +25,16 @@ public class MoveHay : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 
+    internal void DropOnGround(Vector3 target)
+    {
+        transform.DOJump(transform.position + target, 2, 1, 1).OnKill(FreeingTween);
+    }
+
+    private void FreeingTween()
+    {
+        isAnimationFree = true;
+    }
+
     private void InBackpack(GameObject parent)
     {
         parent.GetComponent<BackpackController>().PlaceHayIntoBackpack();
@@ -33,5 +45,10 @@ public class MoveHay : MonoBehaviour
     {
         parent.GetComponent<PlayersCash>().SellHay();
         Destroy(gameObject);
+    }
+    IEnumerator collectAnimation(GameObject parent)
+    {
+        yield return new WaitUntil(()=>isAnimationFree);
+        transform.DOLocalJump(new Vector3(0, 0, -0.4f), 0.5f, 1, .5f).OnComplete(() => InBackpack(parent));
     }
 }

@@ -5,6 +5,7 @@ public class Walking : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] private float _speed;
     [SerializeField] CharacterController _character;
+    [SerializeField] CharacterRoot root;
     Vector3 _movement;
 
     private void Update()
@@ -15,16 +16,15 @@ public class Walking : MonoBehaviour
     public void WalkIntoDirection(Vector2 direction)
     {
         direction.Normalize();
+        root.CharacterState = CharacterRoot.State.Walking;
         _movement = new Vector3(direction.x, 0, direction.y);
         _animator.SetInteger("Status", 1);
-        gameObject.GetComponent<CutController>().HideScythe();
     }
 
     internal void Stop()
     {
+        root.CharacterState = CharacterRoot.State.Idling;
         _animator.SetInteger("Status", 0);
-        Debug.Log("Stop");
         _movement = Vector3.zero;
-        gameObject.GetComponent<CutController>().SearchMode();
     }
 }
