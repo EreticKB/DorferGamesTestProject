@@ -14,6 +14,7 @@ public class CutController : MonoBehaviour
     [Header("Times for scythe enabling")]
     [SerializeField] float _enableTime = 0.35f;
     [SerializeField] float _disableTime = 0.5f;
+    float _clearTimer;
     private void Update()
     {
         if (root.CharacterState == CharacterRoot.State.Walking)
@@ -25,18 +26,30 @@ public class CutController : MonoBehaviour
         _nearest = Vector3.zero;
         if (_ripeWheat.Count != 0) SearchNearest();
         if (_nearest != Vector3.zero) CutTheWheat();
+
+
     }
 
     private void SearchNearest()
     {
-        if (_ripeWheat.Count < 2) _nearest = _ripeWheat[0].transform.position;
-        else
+        if (!_ripeWheat[0].GetComponent<WheatTileController>().Ripe)
         {
-            _nearest = _ripeWheat[0].transform.position;
-            foreach (GameObject tile in _ripeWheat)
+            _ripeWheat.RemoveAt(0);
+            return;
+        }
+        _nearest = _ripeWheat[0].transform.position;
+        if (_ripeWheat.Count < 2) return;
+        
+        for (int i = 1; i == _ripeWheat.Count; i++)
+        {
+            if (!_ripeWheat[i].GetComponent<WheatTileController>().Ripe)
             {
-                if (Vector3.SqrMagnitude(tile.transform.position - transform.position) < Vector3.SqrMagnitude(_nearest - transform.position)) _nearest = tile.transform.position;
+                _ripeWheat.RemoveAt(i);
+                return;
             }
+            if (Vector3.SqrMagnitude(_ripeWheat[i].transform.position - transform.position) < 
+                Vector3.SqrMagnitude(_nearest - transform.position)) 
+                _nearest = _ripeWheat[i].transform.position;
         }
     }
 
@@ -55,11 +68,6 @@ public class CutController : MonoBehaviour
     internal void RemoveFromList(GameObject ripeWheat)
     {
         _ripeWheat.Remove(ripeWheat);
-    }
-
-    internal void RemoveWheatFromList(GameObject wheat)
-    {
-        _ripeWheat.Remove(wheat);
     }
 
     IEnumerator ControlScythe()

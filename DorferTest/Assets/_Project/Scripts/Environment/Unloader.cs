@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Unloader : MonoBehaviour
 {
-
+    [SerializeField] Transform _hay;
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<Collector>().UnloadHay(true, transform);
+        if (other.tag != "Player") return;
+        other.GetComponent<Collector>().UnloadHay(true, _hay);
     }
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<Collector>().UnloadHay(false, transform);
+        if (other.tag != "Player") return;
+        other.GetComponent<Collector>().UnloadHay();
     }
 }

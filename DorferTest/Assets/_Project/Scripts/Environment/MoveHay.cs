@@ -1,21 +1,21 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
-using System;
 
 public class MoveHay : MonoBehaviour
 {
     bool isAnimationFree = false;
+
     internal void collect(GameObject parent)
     {
         disablePhysicsAndSetNewParent(parent.transform);
         StartCoroutine(collectAnimation(parent));
     }
 
-    internal void Unload(Transform parent)
+    internal void Unload(Transform parent,PlayersCash cash)
     {
         disablePhysicsAndSetNewParent(parent);
-        transform.DOLocalJump(new Vector3(0, 0, -0.4f), 2f, 1, 1f).OnComplete(() => InBarn(parent.gameObject));
+        transform.DOLocalJump(new Vector3(0, 0, 0), 2f, 1, 1f).OnComplete(() => InBarn(cash));
     }
 
     private void disablePhysicsAndSetNewParent(Transform parent)
@@ -41,9 +41,9 @@ public class MoveHay : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void InBarn(GameObject parent)
+    private void InBarn(PlayersCash cash)
     {
-        parent.GetComponent<PlayersCash>().SellHay();
+        cash.SellHay();
         Destroy(gameObject);
     }
     IEnumerator collectAnimation(GameObject parent)

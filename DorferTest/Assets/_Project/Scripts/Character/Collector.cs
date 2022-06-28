@@ -9,6 +9,7 @@ public class Collector : MonoBehaviour
     MoveHay _collectible;
     [SerializeField] GameObject _backpack;
     Transform _unloadingPlace;
+    [SerializeField] PlayersCash _cash;
     [SerializeField] GameObject _hayBlock;
     [SerializeField]bool _isUnloading;
     float _unloadingTimer;
@@ -21,7 +22,7 @@ public class Collector : MonoBehaviour
         if (_unloadingTimer <= 0)
         {
             _unloadingTimer = 0.25f;
-            Instantiate(_hayBlock, _backpack.transform.position, new Quaternion(), _backpack.transform).GetComponent<MoveHay>().Unload(_unloadingPlace);
+            Instantiate(_hayBlock, _backpack.transform.position, new Quaternion(), _backpack.transform).GetComponent<MoveHay>().Unload(_unloadingPlace, _cash);
             StackSize--;
             _backpack.GetComponent<BackpackController>().RemoveHayFromBackpack();
         }
@@ -40,5 +41,9 @@ public class Collector : MonoBehaviour
     {
         _isUnloading = status;
         _unloadingPlace = barn;
+    }
+    internal void UnloadHay()
+    {
+        _isUnloading = false;
     }
 }

@@ -1,12 +1,28 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
+using System;
 
 public class CashInfo : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI _text;
     [SerializeField] PlayersCash _barn;
-    [SerializeField] Text _text;
+    bool _check;
     private void Update()
     {
         _text.text = _barn.Cash.ToString();
+        if (!_check)
+        {
+            _check = _barn.Shake;
+            if (_barn.Shake)
+            {
+                transform.DOShakePosition(0.5f, 3, 15,10,false,false).OnKill(Release);
+            }
+        }
+    }
+
+    private void Release()
+    {
+        _check = false;
     }
 }
