@@ -1,12 +1,12 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HayCount : MonoBehaviour
 {
-    [SerializeField] Text _text;
-    [SerializeField] Collector _source;
+    [SerializeField] TextMeshProUGUI _text;
+    [SerializeField] BackpackController _source;
     private void Update()
     {
-        _text.text = $"{_source.StackSize}";
+        _text.text = $"{_source.BackpackAmount}/40";
     }
 }

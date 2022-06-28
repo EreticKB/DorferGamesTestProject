@@ -6,13 +6,18 @@ public class WheatTileController : MonoBehaviour
     [SerializeField] GameObject _hayBlock;
     [SerializeField] GameObject[] _wheatStalk;
     [SerializeField] Collider _cuttingTrigger;
-    [SerializeField] public bool Ripe { get; private set; }
-    [SerializeField] bool _alreadyInList;
+    bool _ripe;
+    bool _alreadyInList;
 
+    private void Awake()
+    {
+        _ripe = true;   
+    }
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag != "Scythe") return;
-        Ripe = false;
+        collider.GetComponent<ScytheController>().ThrowToParent(gameObject);
+        _ripe = false;
         _cuttingTrigger.enabled = false;
         Vector3 target = new Vector3(Random.Range(-2f, 2f), 0.5f, Random.Range(-2f, 2f));
         Instantiate(_hayBlock, transform).GetComponent<MoveHay>().DropOnGround(target);//transform.DOJump(transform.position+target, 2,1,1);
@@ -28,11 +33,12 @@ public class WheatTileController : MonoBehaviour
     {
         _cuttingTrigger.enabled = true;
         _alreadyInList = false;
-        Ripe = true;
+        _ripe = true;
     }
     private void OnTriggerStay(Collider player)
     {
         if (_alreadyInList) return;
+        if (!_ripe) return;
         if (player.tag != "Player") return;
         player.GetComponent<CutController>().AddIntoList(gameObject);
         _alreadyInList = true;

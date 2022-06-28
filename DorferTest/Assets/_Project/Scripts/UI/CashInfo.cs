@@ -16,7 +16,7 @@ public class CashInfo : MonoBehaviour
             _check = _barn.Shake;
             if (_barn.Shake)
             {
-                transform.DOShakePosition(0.5f, 3, 15,10,false,false).OnKill(Release);
+                transform.DOShakePosition(.9f, 3, 15,10,false,false).OnKill(Release);
             }
         }
     }

@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-
-
 public class BackpackVisualController : MonoBehaviour
 {
     [SerializeField] GameObject[] _hayBlocks;

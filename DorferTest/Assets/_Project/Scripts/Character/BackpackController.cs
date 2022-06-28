@@ -4,17 +4,17 @@ public class BackpackController : MonoBehaviour
 {
     [SerializeField] BackpackVisualController _backpack;
     [SerializeField] Collector _collector;
-    private int _backpackAmount;
+    public int BackpackAmount { get; private set; }
     public void PlaceHayIntoBackpack()
     {
-        _backpackAmount++;
-        if (_backpackAmount % 2 == 0) return;
+        BackpackAmount++;
+        if (BackpackAmount % 2 == 0) return;
         _backpack.Increase();
     }
     public void RemoveHayFromBackpack()
     {
-        _backpackAmount--;
-        if (_backpackAmount % 2 != 0) return;
+        BackpackAmount--;
+        if (BackpackAmount % 2 != 0) return;
         _backpack.Decrease();
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using System;
 
 public class CutController : MonoBehaviour
 {
@@ -20,37 +19,25 @@ public class CutController : MonoBehaviour
         if (root.CharacterState == CharacterRoot.State.Walking)
         {
             _scythe.SetActive(false);
+
             StopAllCoroutines();
         }
         if (root.CharacterState != CharacterRoot.State.Idling) return;
         _nearest = Vector3.zero;
         if (_ripeWheat.Count != 0) SearchNearest();
         if (_nearest != Vector3.zero) CutTheWheat();
-
-
     }
-
     private void SearchNearest()
     {
-        if (!_ripeWheat[0].GetComponent<WheatTileController>().Ripe)
-        {
-            _ripeWheat.RemoveAt(0);
-            return;
-        }
         _nearest = _ripeWheat[0].transform.position;
         if (_ripeWheat.Count < 2) return;
-        
-        for (int i = 1; i == _ripeWheat.Count; i++)
+        for (int i = 1; i < _ripeWheat.Count; i++)
         {
-            if (!_ripeWheat[i].GetComponent<WheatTileController>().Ripe)
-            {
-                _ripeWheat.RemoveAt(i);
-                return;
-            }
-            if (Vector3.SqrMagnitude(_ripeWheat[i].transform.position - transform.position) < 
-                Vector3.SqrMagnitude(_nearest - transform.position)) 
+            if (Vector3.SqrMagnitude(_ripeWheat[i].transform.position - transform.position) <
+                    Vector3.SqrMagnitude(_nearest - transform.position))
                 _nearest = _ripeWheat[i].transform.position;
         }
+
     }
 
     private void CutTheWheat()
@@ -62,6 +49,7 @@ public class CutController : MonoBehaviour
     }
     internal void AddIntoList(GameObject ripeWheat)
     {
+        if (_ripeWheat.Contains(ripeWheat)) return;
         _ripeWheat.Add(ripeWheat);
     }
 
